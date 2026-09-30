@@ -46,7 +46,7 @@ with sync_playwright() as pw:
         page.evaluate('(name)=>{location.hash=name}', name)
         page.wait_for_timeout(75)
 
-    for name in ['projects', 'perspectives', 'benchmarks', 'evidence', 'consent', 'proposal', 'board']:
+    for name in ['feed', 'projects', 'perspectives', 'benchmarks', 'evidence', 'consent', 'proposal', 'board']:
         route(name)
         check(page.locator('h1').count() == 1, f'{name} route has one primary heading')
         unnamed = page.locator('button').evaluate_all('''els=>els.filter(el=>el.getClientRects().length && !el.innerText.trim() && !el.getAttribute('aria-label') && !el.getAttribute('aria-labelledby')).length''')

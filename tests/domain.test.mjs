@@ -18,7 +18,10 @@ import {
   projectBrief,
   policyGate,
   skills,
-  MIN_COHORT
+  MIN_COHORT,
+  emergenceSessions,
+  sessionById,
+  launchSession
 } from '../src/domain.js';
 
 test('initial fixture passes its state validator', () => {
@@ -276,3 +279,35 @@ test('client implementation makes no fetch, websocket, model or analytics calls'
   const code = readFileSync(new URL('../src/app.js', import.meta.url), 'utf8');
   assert.doesNotMatch(code, /\bfetch\s*\(|new\s+WebSocket|sendBeacon\s*\(|XMLHttpRequest/);
 });
+
+test('emergence sessions are defined and aligned with enterprise skills', () => {
+  assert.ok(emergenceSessions.length >= 3);
+  for (const session of emergenceSessions) {
+    assert.ok(skills.some(s => s.id === session.skill));
+    assert.ok(session.title.length > 0 && session.title.length <= 100);
+    assert.ok([15, 30, 60].includes(session.durationMinutes));
+  }
+});
+
+test('launching an emergence session creates an active project', () => {
+  const s = initialState();
+  const session = emergenceSessions[0];
+  const p = launchSession(s, session.id);
+  assert.equal(p.status, 'active');
+  assert.equal(p.skill, session.skill);
+  assert.ok(isState(s));
+});
+
+test('completing an emergence session and accepting evidence increases capability score', () => {
+  const s = initialState();
+  const session = emergenceSessions[0]; // systems skill
+  const p = launchSession(s, session.id);
+  p.steps = [true, true, true];
+  const initialEstimate = estimate(s, session.skill);
+  const evidence = replayAssessment(s, p.id, 'independent');
+  reviewEvidence(s, evidence.id, 'accepted');
+  const updatedEstimate = estimate(s, session.skill);
+  assert.equal(updatedEstimate.n, initialEstimate.n + 1);
+  assert.ok(updatedEstimate.score !== null);
+});
+

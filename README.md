@@ -49,6 +49,7 @@ Standardized Rubrics, Contextual Enterprise Benchmarks, and Google Engineering P
 | Surface | Enterprise Experience |
 |---|---|
 | **Emergence Constellation** | Interactive network mapping 6 core enterprise capabilities (Systems Architecture, Research Judgment, Executive Storytelling, Rapid Prototyping, Inclusive Facilitation, Applied GenAI). Toggle between Independent and Gemini-Assisted modes. |
+| **Emergence Feed** | Live peer-curated capability opportunities emerged by leaders and peers in your enterprise network or target actor setting. Launching a session initiates structured practice and accelerates capability score development with high leverage (+0.3 to +0.5). |
 | **Growth Projects** | Launch structured sprints with clear hypotheses, time budgets, practice steps (Frame, Make, Reflect), and exportable Gemini Gem playbooks. |
 | **Perspectives Library** | Adopt tested working methodologies from Google SRE, Google Workspace Narrative Labs, and Enterprise Culture. Adopting a methodology initiates practice without inflating scores. |
 | **Shared Horizons** | Contextualize capabilities against synthetic enterprise benchmarks (Global Enterprise, Google Cloud Partners). Small groups ($N < 30$) are strictly withheld to protect psychological safety. |

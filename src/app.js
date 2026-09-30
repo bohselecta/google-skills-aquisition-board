@@ -18,7 +18,10 @@ import {
   reviewEvidence,
   setSource,
   disclosure,
-  projectBrief
+  projectBrief,
+  emergenceSessions,
+  sessionById,
+  launchSession
 } from './domain.js';
 
 const $ = (s, root = document) => root.querySelector(s);
@@ -40,11 +43,13 @@ try {
 }
 
 let filter = 'All',
+  feedFilter = 'All',
   selectedSkill = 'systems',
   toastTimer;
 
 const paths = {
   grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+  broadcast: '<circle cx="12" cy="12" r="2.5"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>',
   orbit: '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-35 12 12)"/><path d="M17 4a10 10 0 0 1-2 17"/>',
   folder: '<path d="M3 7V5a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>',
   layers: '<path d="m12 3 10 5.5-10 5.5L2 8.5Zm-9 10 9 5 9-5M3 17.5l9 5 9-5"/>',
@@ -95,6 +100,7 @@ function toast(message) {
 
 const pages = [
   ['board', 'grid', 'Emergence Board'],
+  ['feed', 'broadcast', 'Emergence Feed'],
   ['projects', 'folder', 'Growth Projects'],
   ['perspectives', 'layers', 'Perspectives'],
   ['benchmarks', 'chart', 'Shared Horizons'],
@@ -136,7 +142,9 @@ function shell(content) {
             `<a href="#${id}" class="nav-item ${current === id ? 'active' : ''}" ${
               current === id ? 'aria-current="page"' : ''
             }>${icon(i)}<span>${name}</span>${
-              id === 'projects' && active
+              id === 'feed'
+                ? `<span class="count accent">5</span>`
+                : id === 'projects' && active
                 ? `<span class="count">${active}</span>`
                 : id === 'evidence' && pending
                 ? `<span class="count accent">${pending}</span>`
@@ -350,6 +358,133 @@ function board() {
 
   <div class="data-note">
     ${icon('shield')} <strong>Enterprise Security Guarantee:</strong> All demonstrations stay client-side in this browser session. Compliant with Google Cloud VPC-SC perimeters and Customer-Managed Encryption Keys (CMEK). Zero unconsented telemetry.
+  </div>`;
+}
+
+function feedView() {
+  const goalObj = goals.find(g => g.id === state.goal) || goals[0];
+  const filteredSessions = emergenceSessions.filter(s => {
+    if (feedFilter === 'All') return true;
+    if (feedFilter === 'High Impact') return parseFloat(s.impactScore) >= 0.4;
+    return s.skill === feedFilter;
+  });
+
+  const avgCurrentScore = skills
+    .map(s => estimate(state, s.id).score)
+    .filter(sc => sc !== null);
+  const currentMean = avgCurrentScore.length
+    ? (avgCurrentScore.reduce((a, b) => a + b, 0) / avgCurrentScore.length).toFixed(1)
+    : '2.8';
+
+  return `${pageHead(
+    'REAL-TIME ENTERPRISE NETWORK',
+    'Network Emergence Feed',
+    'Real-time capability sessions emerged by leaders, mentors, and target actor profiles in your enterprise network. Complete verified practice sessions to advance your capability scores.',
+    `<span class="live-pill"><span class="live-pulse"></span> 5 Live Sessions Active Now</span>`
+  )}
+
+  <section class="target-actor-banner">
+    <div>
+      <span class="micro">TARGET ACTOR SETTING · ${esc(goalObj.name.toUpperCase())}</span>
+      <h2>Sessions emerged for your target capability profile</h2>
+      <p>Peers and engineering directors across Google Cloud and Workspace have emerged targeted practice sessions. Completing a session produces inspectable demonstration evidence that advances your verified score on the Emergence Board.</p>
+    </div>
+    <div class="target-score-strip">
+      <div class="target-score-item">
+        <strong>${currentMean} / 4.0</strong>
+        <small>Current Mean</small>
+      </div>
+      <div class="target-score-item">
+        <strong style="color:var(--google-green);">+0.5 Max</strong>
+        <small>Score Potential</small>
+      </div>
+      <div class="target-score-item">
+        <strong style="color:#b06000;">3.5 / 4.0</strong>
+        <small>Target Standard</small>
+      </div>
+    </div>
+  </section>
+
+  <div class="live-ticker">
+    <span class="ticker-badge">${icon('broadcast')} LIVE PULSE</span>
+    <span><strong>Elena Rostova (Principal SRE)</strong> emerged a new Systems Chaos sprint · 6 peers in session</span>
+    <span>·</span>
+    <span><strong>Marcus Vance (Workspace AI)</strong> verified a 3-slide storytelling brief (+0.4 score advance)</span>
+    <span>·</span>
+    <span><strong>Siddharth Rao (DeepMind Platform)</strong> opened Vertex AI Red-Teaming crucible</span>
+  </div>
+
+  <div class="toolbar wrap">
+    <div class="segmented" role="group" aria-label="Filter emergence sessions">
+      ${[
+        ['All', 'All Sessions'],
+        ['High Impact', 'High Score Leverage (≥ +0.4)'],
+        ['systems', 'Systems Architecture'],
+        ['story', 'Executive Storytelling'],
+        ['creative', 'Applied GenAI'],
+        ['facilitation', 'Inclusive Facilitation'],
+        ['research', 'Research Judgment']
+      ]
+        .map(([f, label]) =>
+          button(label, `feed-filter:${f}`, feedFilter === f ? 'selected' : '', `aria-pressed="${feedFilter === f}"`)
+        )
+        .join('')}
+    </div>
+    <span class="small-copy muted">${filteredSessions.length} sessions available to practice</span>
+  </div>
+
+  <div class="feed-grid">
+    ${filteredSessions
+      .map(s => {
+        const sk = skillById(s.skill);
+        const currentStat = estimate(state, s.skill);
+        return `<article class="card feed-card">
+          <div>
+            <div class="feed-author">
+              <span class="feed-avatar">${s.avatar}</span>
+              <div class="feed-author-meta">
+                <strong>${esc(s.emergedBy)}</strong>
+                <small>${esc(s.role)}</small>
+              </div>
+              <span class="score-leverage-badge">${icon('spark')} ${s.impactScore} Score Leverage</span>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              ${tag(sk.name, sk.color)}
+              <span class="live-pill"><span class="live-pulse"></span> ${esc(s.urgency)}</span>
+            </div>
+
+            <h3 class="feed-title">${esc(s.title)}</h3>
+            <p class="feed-summary">${esc(s.summary)}</p>
+
+            <div class="feed-practice-box">
+              <span>${icon('folder')} Workspace Demonstration Practice:</span>
+              ${esc(s.practice)}
+            </div>
+          </div>
+
+          <div>
+            <div class="feed-meta-row">
+              <span>${icon('clock')} ${s.durationMinutes} min sprint</span>
+              <span>${icon('people')} ${s.liveParticipants} peers practicing</span>
+              <span>Current Score: <b>${scoreText(currentStat)}</b></span>
+            </div>
+
+            <div class="button-row">
+              ${button(
+                `Accept & Start Emergence Session ${icon('arrow')}`,
+                `launch-session:${s.id}`,
+                'btn google-blue full'
+              )}
+            </div>
+          </div>
+        </article>`;
+      })
+      .join('')}
+  </div>
+
+  <div class="data-note">
+    ${icon('shield')} <strong>Enterprise Learning Protocol:</strong> Emerged sessions are voluntary, peer-curated capability opportunities. Completing a session produces testable evidence that you review before recording to your capability board. Zero surveillance or automated scoring.
   </div>`;
 }
 
@@ -859,6 +994,7 @@ function render() {
   $('#app').innerHTML = shell(
     {
       board,
+      feed: feedView,
       projects: projectsView,
       perspectives: perspectivesView,
       benchmarks: benchmarkView,
@@ -1177,6 +1313,20 @@ document.addEventListener('click', event => {
         filter = id;
         render();
         break;
+      case 'feed-filter':
+        feedFilter = id;
+        render();
+        break;
+      case 'launch-session': {
+        const session = sessionById(id);
+        const p = launchSession(state, id);
+        save();
+        filter = 'All';
+        navigate('projects');
+        toast(`Joined "${session.title}". Structured practice session created.`);
+        projectDialog(p.id);
+        break;
+      }
       case 'project':
         projectDialog(id);
         break;

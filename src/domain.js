@@ -563,3 +563,104 @@ export function policyGate(purpose) {
     'voluntary-learning'
   ].includes(purpose);
 }
+
+export const emergenceSessions = [
+  {
+    id: 'session-sre-chaos',
+    skill: 'systems',
+    title: 'Distributed System Chaos & Failover Modeling',
+    emergedBy: 'Elena Rostova',
+    role: 'Principal SRE, Google Cloud Distributed Systems',
+    avatar: 'ER',
+    networkContext: 'Cloud Infrastructure Guild · 4 teammates enrolled',
+    targetActorAlignment: 'Systems Architect (L6+)',
+    durationMinutes: 30,
+    impactScore: '+0.3',
+    summary: 'Analyze a simulated cascading regional outage in a multi-tenant microservices mesh. Identify circular dependencies, propose circuit-breaking boundaries, and draft canary verification criteria in Google Docs.',
+    practice: 'Model a cascading outage failover in Google Docs',
+    liveParticipants: 6,
+    timeAgo: 'Just now',
+    urgency: 'Active Peer Session'
+  },
+  {
+    id: 'session-exec-story',
+    skill: 'story',
+    title: 'The 3-Slide Board Proposal: Cutting Scope with Conviction',
+    emergedBy: 'Marcus Vance',
+    role: 'Staff Product Lead, Google Workspace AI',
+    avatar: 'MV',
+    networkContext: 'Target Actor Focus: Executive Storytelling',
+    targetActorAlignment: 'Executive Communicator & Narrative Lead',
+    durationMinutes: 15,
+    impactScore: '+0.4',
+    summary: 'A critical product timeline is at risk. Formulate a 3-slide executive decision deck in Google Slides framing the core trade-off, presenting counter-arguments, and securing stakeholder alignment within 90 seconds.',
+    practice: 'Draft a 3-slide executive trade-off deck in Google Slides',
+    liveParticipants: 12,
+    timeAgo: '4m ago',
+    urgency: 'Trending in Network'
+  },
+  {
+    id: 'session-genai-redteam',
+    skill: 'creative',
+    title: 'Vertex AI Agent Red-Teaming & Prompt Injection Defense',
+    emergedBy: 'Siddharth Rao',
+    role: 'Staff Security Architect, Google DeepMind Platform',
+    avatar: 'SR',
+    networkContext: 'Security & GenAI Community of Practice',
+    targetActorAlignment: 'Applied GenAI Architect',
+    durationMinutes: 30,
+    impactScore: '+0.5',
+    summary: 'Construct an enterprise prompt pipeline with Gemini 1.5 Pro. Intentionally craft 3 adversarial injection attempts, document bypass risks, and implement verifiable output guardrails with evaluation test fixtures.',
+    practice: 'Build adversarial guardrails for a Gemini agent playbook',
+    liveParticipants: 9,
+    timeAgo: '12m ago',
+    urgency: 'Live Interactive Crucible'
+  },
+  {
+    id: 'session-async-facilitation',
+    skill: 'facilitation',
+    title: 'Cross-Timezone Architecture Review: Preserving Dissent',
+    emergedBy: 'Priya Patel',
+    role: 'Engineering Director, Enterprise Cloud Platform',
+    avatar: 'PP',
+    networkContext: 'Leadership Development Track',
+    targetActorAlignment: 'Inclusive Facilitator & Team Multiplier',
+    durationMinutes: 15,
+    impactScore: '+0.3',
+    summary: 'Design an asynchronous decision framework in Google Docs for an EMEA/APAC/US team. Create silent-reading contribution channels that protect dissenting viewpoints before forcing convergence.',
+    practice: 'Structure an asynchronous dissent-preserving agenda in Docs',
+    liveParticipants: 4,
+    timeAgo: '28m ago',
+    urgency: 'Network Recommendation'
+  },
+  {
+    id: 'session-conflicting-data',
+    skill: 'research',
+    title: 'Triangulating Divergent Cloud Telemetry vs. Customer Reports',
+    emergedBy: 'Dr. Aris Thorne',
+    role: 'Lead Data Strategist, BigQuery Enterprise Core',
+    avatar: 'AT',
+    networkContext: 'Data & Analytics Network',
+    targetActorAlignment: 'Research & Strategic Analysis',
+    durationMinutes: 30,
+    impactScore: '+0.4',
+    summary: 'Analyze synthetic telemetry logs where uptime monitors indicate 99.99% reliability but enterprise customers report severe latency spikes. Formulate a defensible hypothesis using 3 independent data sources.',
+    practice: 'Triangulate contradictory telemetry vs user incident reports',
+    liveParticipants: 8,
+    timeAgo: '45m ago',
+    urgency: 'Open Challenge'
+  }
+];
+
+export const sessionById = id => emergenceSessions.find(s => s.id === id);
+
+export function launchSession(state, sessionId) {
+  const session = sessionById(sessionId);
+  if (!session) throw new Error('Emergence session not found.');
+  return createProject(state, {
+    skill: session.skill,
+    title: `[Live Session] ${session.title}`,
+    minutes: session.durationMinutes
+  });
+}
+
