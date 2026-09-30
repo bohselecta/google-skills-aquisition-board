@@ -1,0 +1,46 @@
+{
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'none'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+        }
+      ]
+    },
+    {
+      "source": "/google-emergence.html",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"google-emergence.html\""
+        }
+      ]
+    },
+    {
+      "source": "/emergence.html",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"google-emergence.html\""
+        }
+      ]
+    }
+  ]
+}

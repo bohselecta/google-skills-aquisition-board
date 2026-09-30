@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4285F4"/>
+      <stop offset="100%" stop-color="#1967D2"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EA4335"/>
+      <stop offset="100%" stop-color="#C5221F"/>
+    </linearGradient>
+    <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBC04"/>
+      <stop offset="100%" stop-color="#F29900"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34A853"/>
+      <stop offset="100%" stop-color="#188038"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Subtle circular background glow -->
+  <circle cx="24" cy="24" r="22" fill="#F8F9FA" stroke="#E8EAED" stroke-width="1.2"/>
+  
+  <!-- Constellation Connections -->
+  <g stroke-width="1.5" stroke-linecap="round" opacity="0.45">
+    <line x1="24" y1="10" x2="38" y2="19" stroke="#EA4335" stroke-dasharray="2 3"/>
+    <line x1="38" y1="19" x2="34" y2="34" stroke="#FBBC04"/>
+    <line x1="34" y1="34" x2="24" y2="38" stroke="#34A853" stroke-dasharray="2 3"/>
+    <line x1="24" y1="38" x2="13" y2="31" stroke="#4285F4"/>
+    <line x1="13" y1="31" x2="14" y2="17" stroke="#4285F4" stroke-dasharray="2 3"/>
+    <line x1="14" y1="17" x2="24" y2="10" stroke="#EA4335"/>
+    <!-- Cross connections to center -->
+    <line x1="24" y1="24" x2="24" y2="10" stroke="#EA4335"/>
+    <line x1="24" y1="24" x2="38" y2="19" stroke="#FBBC04"/>
+    <line x1="24" y1="24" x2="34" y2="34" stroke="#34A853"/>
+    <line x1="24" y1="24" x2="13" y2="31" stroke="#4285F4"/>
+  </g>
+
+  <!-- Emergence Outer Nodes -->
+  <!-- Red Top Node (Aspiration) -->
+  <circle cx="24" cy="10" r="3.5" fill="url(#redGrad)" filter="url(#glow)"/>
+  <circle cx="24" cy="10" r="1.5" fill="#FFF"/>
+
+  <!-- Yellow Right Node (Possibility) -->
+  <circle cx="38" cy="19" r="3" fill="url(#yellowGrad)"/>
+  <circle cx="38" cy="19" r="1.2" fill="#FFF"/>
+
+  <!-- Green Bottom-Right Node (Practice & Growth) -->
+  <circle cx="34" cy="34" r="3.5" fill="url(#greenGrad)" filter="url(#glow)"/>
+  <circle cx="34" cy="34" r="1.5" fill="#FFF"/>
+
+  <!-- Blue Bottom Node (Evidence) -->
+  <circle cx="24" cy="38" r="3" fill="url(#blueGrad)"/>
+  <circle cx="24" cy="38" r="1.2" fill="#FFF"/>
+
+  <!-- Blue Left Node (Core Mastery) -->
+  <circle cx="13" cy="31" r="3.5" fill="url(#blueGrad)" filter="url(#glow)"/>
+  <circle cx="13" cy="31" r="1.5" fill="#FFF"/>
+
+  <!-- Light Red Upper-Left Node (Curiosity) -->
+  <circle cx="14" cy="17" r="2.8" fill="url(#redGrad)"/>
+  <circle cx="14" cy="17" r="1.2" fill="#FFF"/>
+
+  <!-- Center Living Actor / Gemini Sparkle Node -->
+  <circle cx="24" cy="24" r="5" fill="#FFF" stroke="#1A73E8" stroke-width="1.8" filter="url(#glow)"/>
+  <path d="M24 21L24.8 23.2L27 24L24.8 24.8L24 27L23.2 24.8L21 24L23.2 23.2Z" fill="#1A73E8"/>
+</svg>
