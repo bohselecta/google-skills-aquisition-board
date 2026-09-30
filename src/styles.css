@@ -99,7 +99,7 @@ button .icon { width: 18px; height: 18px; }
 
 /* Sidebar Drawer - Google Workspace / Cloud Style */
 .sidebar {
-  width: 256px;
+  width: 268px;
   position: fixed;
   inset: 0 auto 0 0;
   z-index: 20;
@@ -107,44 +107,74 @@ button .icon { width: 18px; height: 18px; }
   background: var(--paper);
   display: flex;
   flex-direction: column;
-  padding: 16px 12px 16px;
+  padding: 16px 14px 16px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  gap: 11px;
+  padding: 8px 10px;
   margin-bottom: 8px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.brand:hover {
+  background: var(--surface-variant);
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 
 .brand-text {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .brand-title {
-  font-size: 19px;
-  font-weight: 600;
+  font-size: 16.5px;
+  font-weight: 500;
   color: var(--ink);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   display: flex;
   align-items: baseline;
   gap: 4px;
+  white-space: nowrap;
+  line-height: 1.25;
 }
 
-.brand-title .g-blue { color: #4285f4; }
-.brand-title .g-red { color: #ea4335; }
-.brand-title .g-yellow { color: #fbbc04; }
-.brand-title .g-green { color: #34a853; }
-.brand-title span.emergence { color: var(--ink); font-weight: 600; }
+.brand-google {
+  display: inline-flex;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.brand-google .g-blue { color: #4285f4; }
+.brand-google .g-red { color: #ea4335; }
+.brand-google .g-yellow { color: #fbbc04; }
+.brand-google .g-green { color: #34a853; }
+
+.brand-product {
+  color: var(--ink);
+  font-weight: 550;
+  letter-spacing: -0.015em;
+}
 
 .brand-sub {
-  font-size: 9.5px;
+  font-size: 8.5px;
   letter-spacing: 0.08em;
   color: var(--muted);
   font-weight: 500;
   text-transform: uppercase;
+  white-space: nowrap;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .workspace-label {
@@ -268,7 +298,7 @@ nav[aria-label="Main navigation"] {
 
 /* Workspace Canvas */
 .workspace {
-  margin-left: 256px;
+  margin-left: 268px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

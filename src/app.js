@@ -119,11 +119,11 @@ function shell(content) {
 
   return `<aside class="sidebar">
     <a href="#board" class="brand" aria-label="Google Emergence Home">
-      <img src="./public/mark.svg" alt="" width="36" height="36">
+      <img src="./public/mark.svg" alt="Google Emergence" width="32" height="32" class="brand-logo">
       <div class="brand-text">
         <div class="brand-title">
-          <span class="g-blue">G</span><span class="g-red">o</span><span class="g-yellow">o</span><span class="g-blue">g</span><span class="g-green">l</span><span class="g-red">e</span>
-          <span class="emergence">Emergence</span>
+          <span class="brand-google"><span class="g-blue">G</span><span class="g-red">o</span><span class="g-yellow">o</span><span class="g-blue">g</span><span class="g-green">l</span><span class="g-red">e</span></span>
+          <span class="brand-product">Emergence</span>
         </div>
         <span class="brand-sub">Enterprise Capability Board</span>
       </div>
